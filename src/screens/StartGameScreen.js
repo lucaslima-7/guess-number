@@ -1,23 +1,46 @@
-import React from 'react'
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
+import React, { useState } from 'react'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native'
 import Card from '../components/Card'
-import Theme from '../../constants/theme'
 import CustomButton from '../components/CustomButton'
-import theme from '../../constants/theme'
+import CustomInput from '../components/CustomInput'
 
-const StartGameScreen = ({ }) => {
+const StartGameScreen = () => {
+  const [guessedNumber, setGuessedNumber] = useState('')
+
+  const numberInputHandler = text => {
+    setGuessedNumber(text.replace(/[^0-9]/g, ''))
+  }
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Start a New Game!</Text>
-      <Card style={styles.inputContainer}>
-        <Text>Select a Number</Text>
-        <TextInput />
-        <View style={styles.buttonContainer}>
-          <CustomButton title="Cancel" color={"#ff0e54"} onPress={() => console.log('opa')} />
-          <CustomButton title="Confirm" color={"#59EE32"} onPress={() => console.log('opa')} />
-        </View>
-      </Card>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text style={{ fontFamily: 'muli' }}>Select a Number between 0 and 99</Text>
+          <CustomInput
+            blurOnSubmit
+            autoCapitalize='none'
+            autoCorrect={false}
+            keyboardType='number-pad'
+            maxLength={2}
+            value={guessedNumber}
+            onChangeText={numberInputHandler}
+          />
+          <View style={styles.buttonContainer}>
+            <CustomButton title="Reset" color={"#ff0e54"} onPress={() => setGuessedNumber('')} />
+            <CustomButton title="Confirm" color={"#59EE32"} onPress={() => console.log('opa')} />
+          </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -25,11 +48,12 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 10,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
-    marginVertical: 32
+    marginVertical: 32,
+    fontFamily: 'muli'
   },
   firstBtn: {
     marginRight: 10

@@ -5,8 +5,9 @@ const CustomButton = ({ onPress, title, color }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        activeOpacity={0.8}
         style={{ backgroundColor: color, ...styles.oultlinedBG }}
-        onPress={() => onPress}
+        onPress={onPress}
       >
         <Text style={styles.customBtnText}>{title}</Text>
       </TouchableOpacity>
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
   },
   customBtnText: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: 'muli-bold',
     color: "#fff",
     textTransform: "capitalize"
   },
