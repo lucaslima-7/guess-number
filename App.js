@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './src/components/Header'
 import StartGameScreen from './src/screens/StartGameScreen';
+import GameScreen from './src/screens/GameScreen';
+import GameOverScreen from './src/screens/GameOverScreen';
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -16,6 +18,8 @@ const fetchFonts = () => {
 
 export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [selectedNumber, setSelectedNumber] = useState()
+  const [rounds, setRounds] = useState(0)
 
   if (!dataLoaded) {
     return (
@@ -26,10 +30,36 @@ export default function App() {
     )
   }
 
+  const configNewGameHandler = () => {
+    setRounds(0)
+    setSelectedNumber(null)
+  }
+
+  const startGameHandler = selectedNumber => {
+    setSelectedNumber(selectedNumber)
+  }
+
+  const gameOverHandler = rounds => {
+    setRounds(rounds)
+  }
+
+
+  let container = <StartGameScreen onStartGame={startGameHandler} />
+
+  if (selectedNumber && rounds <= 0) {
+    container = (
+      <GameScreen choice={selectedNumber} onGameOver={gameOverHandler} leaveGame={startGameHandler} />
+    )
+  } else if (rounds > 0) {
+    container = (
+      <GameOverScreen choice={selectedNumber} rounds={rounds} onRestart={configNewGameHandler} />
+    )
+  }
+
   return (
     <View style={styles.screen}>
       <Header title="Guess a Number" />
-      <StartGameScreen />
+      {container}
     </View>
   );
 }
