@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
 import NumberContainer from '../components/NumberContainer'
 import CustomButton from '../components/CustomButton'
 import theme from '../../constants/theme'
@@ -50,32 +50,34 @@ const GameScreen = ({ choice, leaveGame, onGameOver }) => {
   }
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.chosenNumber}>
-        <Text style={styles.startText}>Opponent's Guess</Text>
-        <NumberContainer>{currentGuess}</NumberContainer>
-        <View style={styles.buttonContainer}>
-          <CustomButton
-            title="Lower"
-            color={"#23BBFB"}
-            onPress={() => guessHandler('lower')}
-          />
-          <CustomButton
-            title="Greater"
-            color={"#23BBFB"}
-            onPress={() => guessHandler('greater')}
-          />
-        </View>
-        <View style={{ flexDirection: 'row', width: '80%', marginTop: 64 }}>
-          <CustomButton
-            title={"Return"}
-            color={theme.secondary}
-            width='100%'
-            onPress={() => leaveGame()}
-          />
+    <ScrollView>
+      <View style={styles.screen}>
+        <View style={styles.chosenNumber}>
+          <Text style={styles.startText}>Opponent's Guess</Text>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              title="Lower"
+              color={"#23BBFB"}
+              onPress={() => guessHandler('lower')}
+            />
+            <CustomButton
+              title="Greater"
+              color={"#23BBFB"}
+              onPress={() => guessHandler('greater')}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', width: '80%', marginTop: 64 }}>
+            <CustomButton
+              title={"Return"}
+              color={theme.secondary}
+              width='100%'
+              onPress={() => leaveGame()}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
